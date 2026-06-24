@@ -1,0 +1,117 @@
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial, sans-serif;
+}
+
+body{
+background:#f4f6f9;
+}
+
+header{
+background:#005b96;
+color:white;
+text-align:center;
+padding:20px;
+}
+
+nav{
+background:#03396c;
+padding:15px;
+text-align:center;
+}
+
+nav a{
+color:white;
+margin:0 15px;
+font-weight:bold;
+}
+
+main{
+padding:20px;
+}
+
+.panel{
+background:white;
+padding:20px;
+margin-bottom:20px;
+border-radius:10px;
+}
+
+h2{
+margin-bottom:15px;
+color:#005b96;
+}
+
+label{
+margin-top:10px;
+margin-bottom:5px;
+}
+
+input{
+padding:10px;
+border:1px solid #ccc;
+border-radius:5px;
+}
+
+button{
+margin-top:15px;
+padding:10px;
+background:#005b96;
+color:white;
+border-radius:5px;
+}
+
+
+table{
+width:100%;
+
+}
+
+table th,
+table td{
+padding:12px;
+text-align:left;
+}
+
+table th{
+background:#005b96;
+color:white;
+}
+
+.estadisticas{
+display:flex;
+gap:20px;
+}
+
+
+.pendiente{
+    background:#f5bc00;
+}
+
+.encamino{
+    background:#195bbe;
+}
+
+.finalizado{
+    background:#aa1111;
+}
+
+
+
+@media (max-width: 768px) {
+   .estadisticas {
+        flex-direction: column;
+    }
+
+    nav  a {
+        display: block;
+        margin: 10px 0;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+    }
+}

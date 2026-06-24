@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital de Clínicas  Ambulancias</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+<header>
+    <h1>Hospital de Clínicas</h1>
+    <p>Sistema de Gestión de Traslados</p>
+</header>
+
+<nav>
+    <a href="index.html">Documentación</a>
+    <a href="ambulancias.html">Ambulancias</a>
+     <a href="encuestas.html">Encuestas</a>
+</nav>
+
+<main>
+
+<section class="panel">
+    <h2>Alta de Traslado</h2>
+
+<label>Nombre del Paciente</label>
+<input type="text" placeholder="Ingrese nombre">
+
+<label>Destino</label>
+<input type="text" placeholder="Ingrese destino">
+
+<label>Fecha</label>
+<input type="date">
+
+<label>Hora</label>
+<input type="time">
+
+<button type="button">Registrar Traslado</button>
+
+</section>
+
+<section class="panel">
+    <h2>Panel de Gestión de Traslados</h2>
+
+<table>
+    <tr>
+        <th>Paciente</th>
+        <th>Destino</th>
+        <th>Estado</th>
+    </tr>
+    <tr>
+        <td>Juan Pérez</td>
+        <td>Hospital Español</td>
+        <td>Pendiente</td>
+    </tr>
+    <tr>
+        <td>María González</td>
+        <td>Española</td>
+        <td>En Camino</td>
+    </tr>
+    <tr>
+        <td>Carlos Rodríguez</td>
+        <td>Hospital Maciel</td>
+        <td>Finalizado</td>
+    </tr>
+</table>
+
+</section>
+<section class="panel">
+    <h2>Seguimiento de Estado</h2>
+<div class="estadisticas">
+    <div>
+        <h3>8</h3>
+        <p>Traslados Pendientes</p>
+    </div>
+
+    <div>
+        <h3>3</h3>
+        <p>En Camino</p>
+    </div>
+
+    <div class="card">
+        <h3>15</h3>
+        <p>Finalizados</p>
+    </div>
+</div>
+</section>
+</main>
+</body>
+</html>
