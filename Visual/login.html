@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Hospital de Clínicas - Iniciar Sesión</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+
+<header>
+    <h1>Hospital de Clínicas</h1>
+    <p>Acceso al Sistema de Gestión</p>
+</header>
+
+<nav>
+    <a href="index.html">Documentación</a>
+    <a href="encuestas.html">Encuestas</a>
+     <a href="ambulancias.html">Ambulancias</a>
+     <a href="login.html">Iniciar Sesión</a> | 
+    <a href="registros.html">Registrar Paciente</a>
+    <a href="agregardocumentos.html">Agregar Documento</a>
+</nav> 
+
+<main>
+    <section class="panel">
+        <h2>Ingreso al Sistema</h2>
+        <form id="formLogin">
+            <label for="usuario">Usuario o Cédula</label>
+            <input type="text" id="usuario" placeholder="Ingrese usuario o cédula" required>
+            <button type="submit">Ingresar</button>
+        </form>
+        <p id="mensaje-error"></p>
+    </section>
+</main>
+
+<script src="../JS/login.js"></script>
+</body>
+</html>

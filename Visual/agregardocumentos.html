@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Agregar Documento</title>
+    <link rel="stylesheet" href="estilos.css">
+    <script src="../JS/proteger.js"></script>
+</head>
+<body>
+    <nav>
+        <a href="documentos.html">Volver al listado</a>
+    </nav>
+
+    <h2>Agregar nuevo documento</h2>
+
+    <form id="form-documento">
+        <label for="codigoQR">Código QR:</label>
+        <input type="text" id="codigoQR" name="codigoQR" required>
+
+        <label for="titulo">Título:</label>
+        <input type="text" id="titulo" name="titulo" required>
+
+        <label for="descripcion">Descripción:</label>
+        <textarea id="descripcion" name="descripcion"></textarea>
+
+        <label for="idAdmin">Id Administrativo:</label>
+        <input type="number" id="idAdmin" name="idAdmin" required>
+
+        <button type="submit">Guardar</button>
+    </form>
+
+    <p id="mensaje-estado"></p>
+
+    <script src="../JS/agregardocumento.js"></script>
+</body>
+</html>
