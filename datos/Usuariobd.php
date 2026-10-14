@@ -4,8 +4,6 @@ require_once __DIR__ . '/conexion.php';
 
 class Usuariobd
 {
-    // Busca la credencial primero en Administrativo (por Usuario) y despues en Paciente (por Cedula).
-    // Devuelve un array con nombre, rol e id, o null si no existe.
     public function buscarUsuario(string $credencial): ?array
     {
         $conexion = obtenerConexion();
@@ -17,7 +15,6 @@ class Usuariobd
             return [
                 'nombre' => $admin['Nombre'],
                 'rol'    => 'admin',
-                // El nombre de la columna id puede variar en tu tabla; se prueban las mas comunes.
                 'id'     => $admin['Id_administrativo'] ?? $admin['Id'] ?? $admin['id'] ?? null,
             ];
         }
@@ -35,8 +32,6 @@ class Usuariobd
 
         return null;
     }
-
-    // Inserta un paciente nuevo. Devuelve false si la cedula ya existe.
     public function registrarPaciente(string $nombre, string $apellido, string $cedula, string $telefono): bool
     {
         $conexion = obtenerConexion();

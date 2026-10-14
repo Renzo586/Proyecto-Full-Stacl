@@ -18,8 +18,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 mensaje.innerText = resultado.error;
                 return;
             }
-
-            // Cada dato de la sesion se guarda por separado en LocalStorage.
             localStorage.setItem('nombre', resultado.nombre);
             localStorage.setItem('rol', resultado.rol);
             localStorage.setItem('token', resultado.token);
@@ -27,7 +25,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 localStorage.setItem('id', resultado.id);
             }
 
-            // Cada rol tiene su propio panel.
             window.location.href = resultado.rol === 'admin' ? 'admin.html' : 'paciente.html';
         } catch (error) {
             console.error('Error en la peticion:', error);

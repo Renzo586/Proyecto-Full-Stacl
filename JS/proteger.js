@@ -1,5 +1,4 @@
 // Proteccion de rutas. Se incluye en el <head> de cada pagina privada:
-//   <script src="../JS/proteger.js" data-roles="admin"></script>
 (() => {
     const script = document.currentScript;
     const rolesPermitidos = script.dataset.roles;

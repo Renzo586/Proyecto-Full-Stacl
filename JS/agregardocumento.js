@@ -1,9 +1,8 @@
-// Formulario de alta de documentos. La validacion real se hace en PHP; aca solo se muestran sus mensajes.
+// Formulario de alta de documentos. La validacion real se hace en PHP aca solo se muestran sus mensajes.
 document.addEventListener('DOMContentLoaded', () => {
     const formulario = document.getElementById('form-documento');
     const mensaje = document.getElementById('mensaje-estado');
 
-    // Si la sesion trae el id del administrativo, el campo se completa solo.
     const id = localStorage.getItem('id');
     if (id) {
         document.getElementById('idAdmin').value = id;

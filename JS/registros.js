@@ -1,4 +1,4 @@
-// Formulario de registro de pacientes. La validacion se hace en PHP; aca se muestran sus mensajes.
+// Formulario de registro de pacientes. La validacion se hace en PHP aca se muestran sus mensajes.
 document.addEventListener('DOMContentLoaded', () => {
     const formulario = document.getElementById('form-registro');
     const mensaje = document.getElementById('mensaje-estado');

@@ -1,4 +1,4 @@
-// Vista que se abre al escanear el QR: lee ?codigo=... de la URL y muestra los datos del documento.
+// Vista que se abre al escanear el QR: lee codigo de la URL y muestra los datos del documento.
 document.addEventListener('DOMContentLoaded', () => {
     const contenedor = document.getElementById('detalle-documento');
     const codigo = window.location.search.replace('?codigo=', '');
