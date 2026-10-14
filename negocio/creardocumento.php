@@ -1,41 +1,32 @@
 <?php
-require_once __DIR__ . '/../datos/conexion.php';
+// Alta de documentos con validacion simple en el backend.
+require_once __DIR__ . '/util.php';
 require_once __DIR__ . '/../datos/documentobd.php';
 
-header('Content-Type: application/json');
+header('Access-Control-Allow-Methods: POST');
 
-try {
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $codigoQR = $_POST['codigoQR'] ?? '';
-        $titulo = $_POST['titulo'] ?? '';
-        $descripcion = $_POST['descripcion'] ?? '';
-        $idAdmin = $_POST['idAdmin'] ?? '';
+$codigoQR    = campoPost('codigoQR');
+$titulo      = campoPost('titulo');
+$descripcion = campoPost('descripcion');
+$idAdmin     = campoPost('idAdmin');
 
-        $errores = [];
-        if (empty($codigoQR)) {
-            $errores[] = 'El código QR es obligatorio.';
-        }
-        if (empty($titulo)) {
-            $errores[] = 'El título es obligatorio.';
-        }
-        if (empty($idAdmin) || !is_numeric($idAdmin)) {
-            $errores[] = 'El id de administrativo debe ser un número válido.';
-        }
-
-        if (!empty($errores)) {
-            echo json_encode(['ok' => false, 'error' => implode(' ', $errores)]);
-            exit;
-        }
-
-        $db = new Documentobd();
-        $resultado = $db->crearDocumento($codigoQR, $titulo, $descripcion, $idAdmin);
-
-        echo json_encode([
-            'ok' => (bool)$resultado,
-            'mensaje' => $resultado ? 'Documento creado con éxito' : null,
-            'error' => $resultado ? null : 'Ese código QR ya está registrado'
-        ]);
-    }
-} catch (\Throwable $e) {
-    echo json_encode(['ok' => false, 'error' => 'Error del servidor: ' . $e->getMessage()]);
+$errores = [];
+if ($codigoQR === '') {
+    $errores[] = 'El codigo QR es obligatorio.';
 }
+if ($titulo === '') {
+    $errores[] = 'El titulo es obligatorio.';
+}
+if ($idAdmin === '') {
+    $errores[] = 'El id de administrativo es obligatorio.';
+}
+if ($errores) {
+    responderErrores($errores);
+}
+
+$creado = (new Documentobd())->crearDocumento($codigoQR, $titulo, $descripcion, $idAdmin);
+if (!$creado) {
+    responderErrores(["Ya existe un documento con el codigo QR \"$codigoQR\"."]);
+}
+
+responderJson(['ok' => true, 'mensaje' => 'Documento creado con exito.']);

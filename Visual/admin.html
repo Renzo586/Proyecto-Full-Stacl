@@ -2,32 +2,34 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Panel de Paciente</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administración</title>
     <link rel="stylesheet" href="estilos.css">
-    <script src="../JS/proteger.js"></script>
+    <script src="../JS/proteger.js" data-roles="admin"></script>
 </head>
 <body>
     <header>
         <h1>Hospital de Clínicas</h1>
-        <p>Área de Pacientes</p>
+        <p>Área de Administración</p>
     </header>
 
     <nav>
-        <a href="INDEX.html">Documentación</a>
+        <a href="index.html">Documentación</a>
+        <a href="documentos.html">Listado de Documentos</a>
+        <a href="agregardocumentos.html">Agregar Documento</a>
         <a href="encuestas.html">Encuestas</a>
         <a href="ambulancias.html">Ambulancias</a>
-        <a href="#" id="logout">Cerrar sesión</a>
-        <a href="agregardocumentos.html">Agregar Documento</a>
+        <a href="#" id="btn-logout">Cerrar sesión</a>
     </nav>
 
     <main>
         <section class="panel">
             <h2>Bienvenido, <span id="saludo-usuario"></span></h2>
-            <p>Aquí podrás consultar información relacionada a tus traslados y documentos.</p>
+            <p>Desde aquí podés administrar los documentos del hospital.</p>
         </section>
     </main>
 
     <script src="../JS/logout.js"></script>
-    <script src="../JS/paneladmin.js"></script>
+    <script src="../JS/panel.js"></script>
 </body>
 </html>

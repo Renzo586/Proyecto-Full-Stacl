@@ -1,17 +1,9 @@
 <?php
-require_once __DIR__ . '/../datos/conexion.php';
+// Listado de documentos (ordenado por titulo en la capa de datos).
+require_once __DIR__ . '/util.php';
 require_once __DIR__ . '/../datos/documentobd.php';
 
-header('Content-Type: application/json');
+header('Access-Control-Allow-Methods: GET');
 
-try {
-    $db = new Documentobd();
-    $documentos = $db->listarDocumentos();
-
-    echo json_encode([
-        'ok' => true,
-        'documentos' => $documentos
-    ]);
-} catch (\Throwable $e) {
-    echo json_encode(['ok' => false, 'error' => 'Error del servidor: ' . $e->getMessage()]);
-}
+$documentos = (new Documentobd())->listarDocumentos();
+responderJson(['ok' => true, 'documentos' => $documentos]);

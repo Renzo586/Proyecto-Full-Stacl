@@ -2,13 +2,16 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agregar Documento</title>
     <link rel="stylesheet" href="estilos.css">
-    <script src="../JS/proteger.js"></script>
+    <script src="../JS/proteger.js" data-roles="admin"></script>
 </head>
 <body>
     <nav>
+        <a href="admin.html">Panel</a>
         <a href="documentos.html">Volver al listado</a>
+         <a href="#" id="btn-logout">Cerrar sesion</a>
     </nav>
 
     <h2>Agregar nuevo documento</h2>
@@ -30,7 +33,7 @@
     </form>
 
     <p id="mensaje-estado"></p>
-
+    <script src="../JS/logout.js"></script>
     <script src="../JS/agregardocumento.js"></script>
 </body>
 </html>

@@ -1,35 +1,37 @@
+// Login: envia la credencial a PHP y, si es valida, guarda la sesion en LocalStorage.
 document.addEventListener('DOMContentLoaded', () => {
-    document.getElementById('formLogin').addEventListener('submit', async (e) => {
-        e.preventDefault();
-        const credencial = document.getElementById('usuario').value;
+    const formulario = document.getElementById('formLogin');
+    const mensaje = document.getElementById('mensaje-error');
+
+    formulario.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        mensaje.innerText = '';
+
         const datos = new FormData();
-        datos.append('credencial', credencial);
+        datos.append('credencial', document.getElementById('usuario').value);
 
         try {
-            const respuesta = await fetch('../negocio/login.php', {   // <-- este es el cambio
-                method: 'POST',
-                body: datos
-            });
-            const resultado = await respuesta.json();
+            const response = await fetch('../negocio/login.php', { method: 'POST', body: datos });
+            const resultado = await response.json();
 
-            if (resultado.ok) {
-                const usuario = {
-                    nombre: resultado.nombre,
-                    rol: resultado.rol
-                };
-                localStorage.setItem('usuario', JSON.stringify(usuario));
-
-                if (resultado.rol === 'admin') {
-                    window.location.href = 'admin.html';
-                } else {
-                    window.location.href = 'paciente.html';
-                }
-            } else {
-                document.getElementById('mensaje-error').innerText = resultado.error;
+            if (!resultado.ok) {
+                mensaje.innerText = resultado.error;
+                return;
             }
+
+            // Cada dato de la sesion se guarda por separado en LocalStorage.
+            localStorage.setItem('nombre', resultado.nombre);
+            localStorage.setItem('rol', resultado.rol);
+            localStorage.setItem('token', resultado.token);
+            if (resultado.id) {
+                localStorage.setItem('id', resultado.id);
+            }
+
+            // Cada rol tiene su propio panel.
+            window.location.href = resultado.rol === 'admin' ? 'admin.html' : 'paciente.html';
         } catch (error) {
-            console.error('Error en la petición:', error);
-            document.getElementById('mensaje-error').innerText = 'No se pudo conectar con el servidor.';
+            console.error('Error en la peticion:', error);
+            mensaje.innerText = 'No se pudo conectar con el servidor.';
         }
     });
 });

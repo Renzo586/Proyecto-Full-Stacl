@@ -1,11 +1,29 @@
+// Proteccion de rutas. Se incluye en el <head> de cada pagina privada:
+//   <script src="../JS/proteger.js" data-roles="admin"></script>
 (() => {
-    const usuarioGuardado = localStorage.getItem('usuario');
+    const script = document.currentScript;
+    const rolesPermitidos = script.dataset.roles;
 
-    if (!usuarioGuardado) {
-        window.location.href = 'login.html';
-        return;
-    }
+    const verificar = () => {
+        const token = localStorage.getItem('token');
+        const rol = localStorage.getItem('rol');
 
-    const usuario = JSON.parse(usuarioGuardado);
-    console.log('Sesión activa:', usuario.nombre, '-', usuario.rol);
+        // Sin sesion -> al login.
+        if (!token || !rol) {
+            localStorage.clear();
+            window.location.href = 'login.html';
+            return;
+        }
+        // Con sesion pero con otro rol -> a su propio panel.
+        if (rolesPermitidos && !rolesPermitidos.includes(rol)) {
+            window.location.href = rol === 'admin' ? 'admin.html' : 'paciente.html';
+        }
+    };
+
+    verificar();
+
+    // Si el navegador restaura la pagina con el boton "Atras", se vuelve a verificar.
+    window.addEventListener('pageshow', (event) => {
+        if (event.persisted) verificar();
+    });
 })();

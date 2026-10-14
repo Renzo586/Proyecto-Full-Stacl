@@ -1,30 +1,40 @@
+// Vista que se abre al escanear el QR: lee ?codigo=... de la URL y muestra los datos del documento.
 document.addEventListener('DOMContentLoaded', () => {
-    const params = new URLSearchParams(window.location.search);
-    const codigo = params.get('codigo');
-
     const contenedor = document.getElementById('detalle-documento');
+    const codigo = window.location.search.replace('?codigo=', '');
 
-    if (!codigo) {
-        contenedor.innerText = 'No se especificó ningún código de documento en la URL.';
+    if (codigo === '') {
+        contenedor.textContent = 'No se especifico ningun codigo de documento en la direccion.';
         return;
     }
 
-    fetch(`../negocio/verdocumento.php?codigo=${encodeURIComponent(codigo)}`)
-        .then(res => res.json())
-        .then(data => {
-            if (data.ok) {
-                const doc = data.documento;
-                contenedor.innerHTML = `
-                    <h3>${doc.Titulo}</h3>
-                    <p><strong>Código QR:</strong> ${doc.CodigoQR}</p>
-                    <p><strong>Descripción:</strong> ${doc.Descripcion ?? 'Sin descripción'}</p>
-                `;
-            } else {
-                contenedor.innerText = 'Error: ' + data.error;
+    // Agrega una linea "Etiqueta: valor" usando texto plano.
+    const agregarLinea = (etiqueta, valor) => {
+        const parrafo = document.createElement('p');
+        const negrita = document.createElement('strong');
+        negrita.textContent = etiqueta + ': ';
+        parrafo.appendChild(negrita);
+        parrafo.appendChild(document.createTextNode(valor));
+        contenedor.appendChild(parrafo);
+    };
+
+    fetch('../negocio/verdocumento.php?codigo=' + codigo)
+        .then((response) => response.json())
+        .then((data) => {
+            contenedor.textContent = '';
+            if (!data.ok) {
+                contenedor.textContent = 'Error: ' + data.error;
+                return;
             }
+            const documento = data.documento;
+            const titulo = document.createElement('h3');
+            titulo.textContent = documento.Titulo;
+            contenedor.appendChild(titulo);
+            agregarLinea('Codigo QR', documento.CodigoQR);
+            agregarLinea('Descripcion', documento.Descripcion || 'Sin descripcion');
         })
-        .catch(err => {
-            console.error('Error:', err);
-            contenedor.innerText = 'No se pudo conectar con el servidor.';
+        .catch((error) => {
+            console.error('Error:', error);
+            contenedor.textContent = 'No se pudo conectar con el servidor.';
         });
 });

@@ -2,35 +2,39 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Registro de Paciente</title>
     <link rel="stylesheet" href="estilos.css">
 </head>
-
-<nav>
-    <a href="index.html">Documentación</a>
-    <a href="encuestas.html">Encuestas</a>
-     <a href="ambulancias.html">Ambulancias</a>
-     <a href="login.html">Iniciar Sesión</a> | 
-    <a href="registros.html">Registrar Paciente</a>
-    <a href="agregardocumentos.html">Agregar Documento</a>
-</nav>
-
 <body>
+    <nav>
+        <a href="index.html">Documentación</a>
+        <a href="encuestas.html">Encuestas</a>
+        <a href="ambulancias.html">Ambulancias</a>
+        <a href="login.html">Iniciar Sesión</a> |
+        <a href="registros.html">Registrar Paciente</a>
+        <a href="agregardocumentos.html">Agregar Documento</a>
+        <a href="#" id="btn-logout" style="display:none">Cerrar sesion</a>
+    </nav>
 
-    <h2>Registrar nuevo paciente</h2>
-
-  <form id="form-registro">
-    <label for="nombre">Nombre:</label>
-    <input type="text" name="nombre" id="nombre" required>
-    <label for="apellido">Apellido:</label>
-    <input type="text" name="apellido" id="apellido" required>
-    <label for="cedula">Cédula:</label>
-    <input type="text" name="cedula" id="cedula" required>
-    <label for="telefono">Teléfono:</label>
-    <input type="text" name="telefono" id="telefono" required>
-    <button type="submit">Guardar</button>
-</form>
-    <p id="mensaje-estado"></p>
+    <main>
+        <section class="panel">
+            <h2>Registrar nuevo paciente</h2>
+            <form id="form-registro">
+                <label for="nombre">Nombre:</label>
+                <input type="text" name="nombre" id="nombre" required>
+                <label for="apellido">Apellido:</label>
+                <input type="text" name="apellido" id="apellido" required>
+                <label for="cedula">Cédula:</label>
+                <input type="text" name="cedula" id="cedula" required>
+                <label for="telefono">Teléfono:</label>
+                <input type="text" name="telefono" id="telefono" required>
+                <button type="submit">Guardar</button>
+            </form>
+            <p id="mensaje-estado"></p>
+        </section>
+    </main>
+    <script src="../JS/logout.js"></script>
     <script src="../JS/registros.js"></script>
 </body>
 </html>

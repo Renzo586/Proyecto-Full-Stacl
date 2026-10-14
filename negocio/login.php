@@ -1,27 +1,25 @@
 <?php
-require_once __DIR__ . '/../datos/conexion.php';
+// Login: valida la credencial (usuario de admin o cedula de paciente) y devuelve rol + clave de sesion.
+require_once __DIR__ . '/util.php';
+require_once __DIR__ . '/../datos/Usuariobd.php';
 
-header('Content-Type: application/json');
-$credencial = $_POST['credencial'] ?? '';
-if (empty($credencial)) {
-    echo json_encode(['ok' => false, 'error' => 'Escribe una credencial']);
-    exit;
-}
-$pdo = obtenerConexion();
-$stmt = $pdo->prepare("SELECT * FROM Administrativo WHERE Usuario = ?");
-$stmt->execute([$credencial]);
-$admin = $stmt->fetch();
+header('Access-Control-Allow-Methods: POST');
 
-if ($admin) {
-    echo json_encode(['ok' => true, 'nombre' => $admin['Nombre'], 'rol' => 'admin']);
-    exit;
-}
-$stmt = $pdo->prepare("SELECT * FROM Paciente WHERE Cedula = ?");
-$stmt->execute([$credencial]);
-$paciente = $stmt->fetch();
+$credencial = campoPost('credencial');
 
-if ($paciente) {
-    echo json_encode(['ok' => true, 'nombre' => $paciente['Nombre'], 'rol' => 'paciente']);
-    exit;
+if ($credencial === '') {
+    responderErrores(['Escribi tu usuario o tu cedula.']);
 }
-echo json_encode(['ok' => false, 'error' => 'Usuario no encontrado']);
+
+$usuario = (new Usuariobd())->buscarUsuario($credencial);
+if (!$usuario) {
+    responderErrores(['No existe ningun usuario ni paciente con esa credencial.']);
+}
+
+responderJson([
+    'ok'     => true,
+    'nombre' => $usuario['nombre'],
+    'rol'    => $usuario['rol'],
+    'id'     => $usuario['id'],
+    'token'  => uniqid(),
+]);

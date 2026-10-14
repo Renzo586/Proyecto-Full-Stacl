@@ -99,3 +99,33 @@ table th {
     flex-direction: column;
   }
 }
+
+.mensaje-ok {
+    color: #1b7a3a;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.mensaje-error {
+    color: #aa1111;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+form label,
+form input,
+form textarea {
+    display: block;
+}
+
+form textarea {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 400px;
+}
+
+td a {
+    margin-right: 10px;
+}

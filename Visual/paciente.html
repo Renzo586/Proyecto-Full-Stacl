@@ -2,9 +2,10 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Panel de Paciente</title>
     <link rel="stylesheet" href="estilos.css">
-    <script src="../JS/proteger.js"></script>
+    <script src="../JS/proteger.js" data-roles="paciente"></script>
 </head>
 <body>
     <header>
@@ -13,10 +14,10 @@
     </header>
 
     <nav>
-        <a href="INDEX.html">Documentación</a>
+        <a href="index.html">Documentación</a>
         <a href="encuestas.html">Encuestas</a>
         <a href="ambulancias.html">Ambulancias</a>
-        <a href="#" id="logout">Cerrar sesión</a>
+        <a href="#" id="btn-logout">Cerrar sesión</a>
     </nav>
 
     <main>
@@ -27,6 +28,6 @@
     </main>
 
     <script src="../JS/logout.js"></script>
-      <script src="../JS/panelpaciente.js"></script>
+    <script src="../JS/panel.js"></script>
 </body>
 </html>

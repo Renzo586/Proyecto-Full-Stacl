@@ -1,25 +1,36 @@
+// Formulario de alta de documentos. La validacion real se hace en PHP; aca solo se muestran sus mensajes.
 document.addEventListener('DOMContentLoaded', () => {
-    const form = document.getElementById('form-documento');
+    const formulario = document.getElementById('form-documento');
+    const mensaje = document.getElementById('mensaje-estado');
 
-    form.addEventListener('submit', function(e) {
-        e.preventDefault();
+    // Si la sesion trae el id del administrativo, el campo se completa solo.
+    const id = localStorage.getItem('id');
+    if (id) {
+        document.getElementById('idAdmin').value = id;
+    }
 
-        const datos = new FormData(this);
+    formulario.addEventListener('submit', function (event) {
+        event.preventDefault();
+        mensaje.textContent = '';
 
-        fetch('../negocio/CrearDocumento.php', {
-            method: 'POST',
-            body: datos
-        })
-            .then(res => res.json())
-            .then(data => {
-                const mensaje = document.getElementById('mensaje-estado');
+        fetch('../negocio/creardocumento.php', { method: 'POST', body: new FormData(this) })
+            .then((response) => response.json())
+            .then((data) => {
                 if (data.ok) {
-                    mensaje.innerText = data.mensaje;
+                    mensaje.textContent = data.mensaje;
+                    mensaje.className = 'mensaje-ok';
+                    const idAdmin = document.getElementById('idAdmin').value;
                     this.reset();
+                    document.getElementById('idAdmin').value = idAdmin; // se conserva para el proximo
                 } else {
-                    mensaje.innerText = 'Error: ' + data.error;
+                    mensaje.textContent = 'Error: ' + data.error;
+                    mensaje.className = 'mensaje-error';
                 }
             })
-            .catch(err => console.error('Error:', err));
+            .catch((error) => {
+                console.error('Error:', error);
+                mensaje.textContent = 'No se pudo conectar con el servidor.';
+                mensaje.className = 'mensaje-error';
+            });
     });
 });
