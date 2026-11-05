@@ -1,37 +1,21 @@
 <?php
-// Acceso a datos de usuarios: buscar usuario para el login (admin/paciente) y registrar pacientes.
+// Acceso a datos de usuarios (administrador / operador) y registro de pacientes.
 require_once __DIR__ . '/conexion.php';
 
 class Usuariobd
 {
-    public function buscarUsuario(string $credencial): ?array
+    public function buscarPorUsuario(string $usuario): ?array
     {
         $conexion = obtenerConexion();
-
-        $stmtAdmin = $conexion->prepare("SELECT * FROM Administrativo WHERE Usuario = :credencial");
-        $stmtAdmin->execute(['credencial' => $credencial]);
-        $admin = $stmtAdmin->fetch();
-        if ($admin) {
-            return [
-                'nombre' => $admin['Nombre'],
-                'rol'    => 'admin',
-                'id'     => $admin['Id_administrativo'] ?? $admin['Id'] ?? $admin['id'] ?? null,
-            ];
-        }
-
-        $stmtPaciente = $conexion->prepare("SELECT * FROM Paciente WHERE Cedula = :credencial");
-        $stmtPaciente->execute(['credencial' => $credencial]);
-        $paciente = $stmtPaciente->fetch();
-        if ($paciente) {
-            return [
-                'nombre' => $paciente['Nombre'],
-                'rol'    => 'paciente',
-                'id'     => $paciente['Cedula'],
-            ];
-        }
-
-        return null;
+        $stmt = $conexion->prepare(
+            "SELECT Id_usuario, Usuario, Clave_hash, Nombre, Apellido, Rol, Activo
+             FROM Usuario WHERE Usuario = :usuario"
+        );
+        $stmt->execute(['usuario' => $usuario]);
+        $fila = $stmt->fetch();
+        return $fila ?: null;
     }
+
     public function registrarPaciente(string $nombre, string $apellido, string $cedula, string $telefono): bool
     {
         $conexion = obtenerConexion();
@@ -54,3 +38,4 @@ class Usuariobd
         ]);
     }
 }
+

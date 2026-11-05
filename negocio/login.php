@@ -1,25 +1,45 @@
 <?php
-// Login: valida la credencial (usuario de admin o cedula de paciente) y devuelve rol + clave de sesion.
+// Login: valida usuario y contrasena con password_verify() y crea la sesion PHP.
 require_once __DIR__ . '/util.php';
+require_once __DIR__ . '/sesion.php';
 require_once __DIR__ . '/../datos/Usuariobd.php';
 
-header('Access-Control-Allow-Methods: POST');
+exigirMetodo('POST');
+sesion_iniciar();
 
-$credencial = campoPost('credencial');
+$usuario = campoPost('usuario');
+$clave   = $_POST['clave'] ?? '';
 
-if ($credencial === '') {
-    responderErrores(['Escribi tu usuario o tu cedula.']);
+$errores = [];
+if ($usuario === '') {
+    $errores[] = 'Escribi tu usuario.';
+}
+if ($clave === '') {
+    $errores[] = 'Escribi tu contrasena.';
+}
+if ($errores) {
+    responderErrores($errores);
 }
 
-$usuario = (new Usuariobd())->buscarUsuario($credencial);
-if (!$usuario) {
-    responderErrores(['No existe ningun usuario ni paciente con esa credencial.']);
+$fila = (new Usuariobd())->buscarPorUsuario($usuario);
+
+$mensajeError = 'Usuario o contrasena incorrectos.';
+
+if ($fila === null) {
+    responderErrores([$mensajeError]);
+}
+if ((int) $fila['Activo'] !== 1) {
+    responderErrores([$mensajeError]);
+}
+if (!password_verify($clave, $fila['Clave_hash'])) {
+    responderErrores([$mensajeError]);
 }
 
-responderJson([
-    'ok'     => true,
-    'nombre' => $usuario['nombre'],
-    'rol'    => $usuario['rol'],
-    'id'     => $usuario['id'],
-    'token'  => uniqid(),
-]);
+session_regenerate_id(true);
+$_SESSION['usuario'] = [
+    'id'     => (int) $fila['Id_usuario'],
+    'nombre' => $fila['Nombre'],
+    'rol'    => $fila['Rol'],
+];
+
+responderJson(['ok' => true, 'nombre' => $fila['Nombre'], 'rol' => $fila['Rol']]);

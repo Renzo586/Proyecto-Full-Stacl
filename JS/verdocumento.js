@@ -1,14 +1,12 @@
-// Vista que se abre al escanear el QR: lee codigo de la URL y muestra los datos del documento.
+// Vista publica (se abre al escanear el QR): muestra los datos del documento y un enlace al archivo.
 document.addEventListener('DOMContentLoaded', () => {
     const contenedor = document.getElementById('detalle-documento');
-    const codigo = window.location.search.replace('?codigo=', '');
+    const codigo = new URLSearchParams(window.location.search).get('codigo') || '';
 
     if (codigo === '') {
         contenedor.textContent = 'No se especifico ningun codigo de documento en la direccion.';
         return;
     }
-
-    // Agrega una linea "Etiqueta: valor" usando texto plano.
     const agregarLinea = (etiqueta, valor) => {
         const parrafo = document.createElement('p');
         const negrita = document.createElement('strong');
@@ -18,7 +16,7 @@ document.addEventListener('DOMContentLoaded', () => {
         contenedor.appendChild(parrafo);
     };
 
-    fetch('../negocio/verdocumento.php?codigo=' + codigo)
+    fetch('../negocio/verdocumento.php?codigo=' + encodeURIComponent(codigo))
         .then((response) => response.json())
         .then((data) => {
             contenedor.textContent = '';
@@ -30,8 +28,16 @@ document.addEventListener('DOMContentLoaded', () => {
             const titulo = document.createElement('h3');
             titulo.textContent = documento.Titulo;
             contenedor.appendChild(titulo);
-            agregarLinea('Codigo QR', documento.CodigoQR);
+
+            agregarLinea('Codigo QR', documento.Codigo_qr);
+            agregarLinea('Categoria', documento.Categoria);
             agregarLinea('Descripcion', documento.Descripcion || 'Sin descripcion');
+
+            const enlace = document.createElement('a');
+            enlace.href = '../negocio/verarchivo.php?codigo=' + encodeURIComponent(documento.Codigo_qr);
+            enlace.textContent = 'Abrir documento';
+            enlace.target = '_blank';
+            contenedor.appendChild(enlace);
         })
         .catch((error) => {
             console.error('Error:', error);

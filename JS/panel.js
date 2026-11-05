@@ -1,9 +1,7 @@
-// Muestra el nombre del usuario en los paneles de admin y de paciente.
-document.addEventListener('DOMContentLoaded', () => {
+// Muestra el nombre del usuario logueado en el panel.
+const mostrarSaludo = (usuario) => {
     const saludo = document.getElementById('saludo-usuario');
-    const nombre = localStorage.getItem('nombre');
-
-    if (saludo && nombre) {
-        saludo.textContent = nombre;
-    }
-});
+    if (saludo) saludo.textContent = usuario.nombre;
+};
+document.addEventListener('sesion-lista', (e) => mostrarSaludo(e.detail));
+if (window.USUARIO_ACTUAL) mostrarSaludo(window.USUARIO_ACTUAL);

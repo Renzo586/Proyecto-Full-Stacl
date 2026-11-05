@@ -1,13 +1,21 @@
 <?php
-// Baja de un documento: llega desde un formulario de la tabla y vuelve a la lista.
+// Baja de documento: solo administrador. Elimina el registro y el archivo fisico.
 require_once __DIR__ . '/util.php';
+require_once __DIR__ . '/sesion.php';
 require_once __DIR__ . '/../datos/documentobd.php';
-
-header('Access-Control-Allow-Methods: POST');
-
-$codigoQR = campoPost('codigoQR');
-
-(new Documentobd())->eliminarDocumento($codigoQR);
-
-header('Location: ../Visual/documentos.html');
-exit;
+exigirMetodo('POST');
+sesion_requerir_rol('administrador');
+$id = (int) campoPost('id');
+if ($id <= 0) {
+    responderErrores(['Documento invalido.']);
+}
+$ruta = (new Documentobd())->eliminarDocumento($id);
+if ($ruta === null) {
+    responderErrores(['El documento no existe.']);
+}
+$nombreArchivo = basename($ruta);
+$rutaArchivo   = __DIR__ . '/../uploads/documentos/' . $nombreArchivo;
+if (file_exists($rutaArchivo)) {
+    unlink($rutaArchivo);
+}
+responderJson(['ok' => true, 'mensaje' => 'Documento eliminado.']);

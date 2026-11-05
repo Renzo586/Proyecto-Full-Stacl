@@ -129,3 +129,25 @@ form textarea {
 td a {
     margin-right: 10px;
 }
+select {
+    display: block;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 100%;
+    max-width: 400px;
+    margin-bottom: 10px;
+}
+
+input[type="radio"] {
+    display: inline;
+    width: auto;
+}
+td button {
+    margin: 2px;
+}
+
+#qr-contenedor {
+    margin-top: 20px;
+    text-align: center;
+}

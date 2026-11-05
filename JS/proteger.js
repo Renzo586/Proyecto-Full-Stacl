@@ -1,28 +1,27 @@
-// Proteccion de rutas. Se incluye en el <head> de cada pagina privada:
 (() => {
-    const script = document.currentScript;
-    const rolesPermitidos = script.dataset.roles;
+    const roles = (document.currentScript.dataset.roles || '')
+        .split(',').map((r) => r.trim()).filter(Boolean);
+    document.documentElement.style.visibility = 'hidden';
 
     const verificar = () => {
-        const token = localStorage.getItem('token');
-        const rol = localStorage.getItem('rol');
-
-        // Sin sesion -> al login.
-        if (!token || !rol) {
-            localStorage.clear();
-            window.location.href = 'login.html';
-            return;
-        }
-        // Con sesion pero con otro rol -> a su propio panel.
-        if (rolesPermitidos && !rolesPermitidos.includes(rol)) {
-            window.location.href = rol === 'admin' ? 'admin.html' : 'paciente.html';
-        }
+        fetch('../negocio/sesionactual.php')
+            .then((response) => response.json())
+            .then((data) => {
+                if (!data.ok) {
+                    window.location.href = 'login.html';
+                    return;
+                }
+                if (roles.length && !roles.includes(data.rol)) {
+                    window.location.href = 'admin.html';
+                    return;
+                }
+                window.USUARIO_ACTUAL = data;
+                document.documentElement.style.visibility = 'visible';
+                document.dispatchEvent(new CustomEvent('sesion-lista', { detail: data }));
+            })
+            .catch(() => { window.location.href = 'login.html'; });
     };
 
     verificar();
-
-    // Si el navegador restaura la pagina con el boton "Atras", se vuelve a verificar.
-    window.addEventListener('pageshow', (event) => {
-        if (event.persisted) verificar();
-    });
+    window.addEventListener('pageshow', (event) => { if (event.persisted) verificar(); });
 })();

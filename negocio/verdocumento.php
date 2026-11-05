@@ -1,9 +1,9 @@
 <?php
-// Devuelve los datos de un documento a partir del codigo QR.
+// Devuelve los datos de un documento a partir del codigo QR (vista publica, sin sesion).
 require_once __DIR__ . '/util.php';
 require_once __DIR__ . '/../datos/documentobd.php';
 
-header('Access-Control-Allow-Methods: GET');
+exigirMetodo('GET');
 
 $codigoQR = campoGet('codigo');
 if ($codigoQR === '') {

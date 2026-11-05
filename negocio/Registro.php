@@ -1,9 +1,11 @@
 <?php
-// Registro de pacientes con validacion simple en el backend.
+// Registro de pacientes con validacion en el backend. Requiere sesion (administrador u operador).
 require_once __DIR__ . '/util.php';
+require_once __DIR__ . '/sesion.php';
 require_once __DIR__ . '/../datos/Usuariobd.php';
 
-header('Access-Control-Allow-Methods: POST');
+exigirMetodo('POST');
+sesion_requerir_rol('administrador', 'operador');
 
 $nombre   = campoPost('nombre');
 $apellido = campoPost('apellido');

@@ -1,9 +1,10 @@
 <?php
-// Listado de documentos (ordenado por titulo en la capa de datos).
+// Listado de documentos. Requiere sesion (administrador u operador).
 require_once __DIR__ . '/util.php';
+require_once __DIR__ . '/sesion.php';
 require_once __DIR__ . '/../datos/documentobd.php';
 
-header('Access-Control-Allow-Methods: GET');
+exigirMetodo('GET');
+sesion_requerir_rol('administrador', 'operador');
 
-$documentos = (new Documentobd())->listarDocumentos();
-responderJson(['ok' => true, 'documentos' => $documentos]);
+responderJson(['ok' => true, 'documentos' => (new documentobd())->listarDocumentos()]);

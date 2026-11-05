@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hospital de Clínicas  Ambulancias</title>
+    <title>Hospital de Clínicas Ambulancias</title>
     <link rel="stylesheet" href="estilos.css">
+    <script src="../JS/proteger.js" data-roles="administrador,operador"></script>
 </head>
 <body>
 
@@ -14,74 +14,84 @@
     <p>Sistema de Gestión de Traslados</p>
 </header>
 <nav>
-    <a href="index.html">Documentación</a>
+    <a href="admin.html">Panel</a>
+    <a href="documentos.html">Documentos</a>
     <a href="ambulancias.html">Ambulancias</a>
     <a href="encuestas.html">Encuestas</a>
-    <a href="login.html">Iniciar Sesión</a> | 
     <a href="registros.html">Registrar Paciente</a>
-    <a href="agregardocumentos.html">Agregar Documento</a>
+    <a href="#" id="btn-logout">Cerrar sesión</a>
 </nav>
 <main>
 <section class="panel">
     <h2>Alta de Traslado</h2>
-<label>Nombre del Paciente</label>
-<input type="text" placeholder="Ingrese nombre">
-<label>Destino</label>
-<input type="text" placeholder="Ingrese destino">
-<label>Fecha</label>
-<input type="date">
-<label>Hora</label>
-<input type="time">
-<button type="button">Registrar Traslado</button>
-
+    <form id="form-traslado">
+        <input type="hidden" id="id" name="id">
+        <label for="paciente">Paciente</label>
+        <select id="paciente" name="paciente" required></select>
+        <label for="matricula">Móvil (ambulancia)</label>
+        <select id="matricula" name="matricula" required></select>
+        <label for="chofer">Chofer</label>
+        <select id="chofer" name="chofer" required></select>
+        <label for="enfermero">Enfermero</label>
+        <select id="enfermero" name="enfermero" required></select>
+        <label for="origen">Origen</label>
+        <input type="text" id="origen" name="origen" maxlength="150" placeholder="Ingrese origen" required>
+        <label for="destino">Destino</label>
+        <input type="text" id="destino" name="destino" maxlength="150" placeholder="Ingrese destino" required>
+        <label for="salida">Hora de salida</label>
+        <input type="datetime-local" id="salida" name="salida" required>
+        <label for="llegada">Hora de llegada (opcional)</label>
+        <input type="datetime-local" id="llegada" name="llegada">
+        <label for="observaciones">Observaciones (opcional)</label>
+        <textarea id="observaciones" name="observaciones" maxlength="1000"></textarea>
+        <button type="submit" id="btn-guardar">Registrar Traslado</button>
+        <button type="button" id="btn-cancelar-edicion" hidden>Cancelar edición</button>
+    </form>
+    <p id="mensaje-estado"></p>
 </section>
 
 <section class="panel">
     <h2>Panel de Gestión de Traslados</h2>
+    <form id="form-filtro">
+        <label for="filtro-paciente">Buscar por paciente (nombre o cédula)</label>
+        <input type="text" id="filtro-paciente" placeholder="Ej: Perez o 12345678">
+        <label for="filtro-matricula">Filtrar por móvil</label>
+        <select id="filtro-matricula"></select>
+        <button type="submit">Filtrar</button>
+        <button type="button" id="btn-limpiar-filtro">Ver todos</button>
+    </form>
 
-<table>
-    <tr>
-        <th>Paciente</th>
-        <th>Destino</th>
-        <th>Estado</th>
-    </tr>
-    <tr>
-        <td>Juan Pérez</td>
-        <td>Hospital Español</td>
-        <td>Pendiente</td>
-    </tr>
-    <tr>
-        <td>María González</td>
-        <td>Española</td>
-        <td>En Camino</td>
-    </tr>
-    <tr>
-        <td>Carlos Rodríguez</td>
-        <td>Hospital Maciel</td>
-        <td>Finalizado</td>
-    </tr>
-</table>
-
+    <div class="tabla-scroll">
+        <table id="tabla-traslados">
+            <thead>
+                <tr>
+                    <th>Paciente</th>
+                    <th>Origen</th>
+                    <th>Destino</th>
+                    <th>Móvil</th>
+                    <th>Chofer</th>
+                    <th>Enfermero</th>
+                    <th>Salida</th>
+                    <th>Llegada</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
 </section>
 <section class="panel">
     <h2>Seguimiento de Estado</h2>
-<div class="estadisticas">
-    <div>
-        <h3>8</h3>
-        <p>Traslados Pendientes</p>
+    <div class="estadisticas">
+        <div><h3 id="stat-pendientes">0</h3><p>Pendientes</p></div>
+        <div><h3 id="stat-encurso">0</h3><p>En curso</p></div>
+        <div><h3 id="stat-finalizados">0</h3><p>Finalizados</p></div>
+        <div><h3 id="stat-cancelados">0</h3><p>Cancelados</p></div>
     </div>
-
-    <div>
-        <h3>3</h3>
-        <p>En Camino</p>
-    </div>
-
-    <div>
-        <h3>15</h3>
-        <p>Finalizados</p>
-    </div>
-</div>
 </section>
 </main>
+<script src="../JS/logout.js"></script>
+<script src="../JS/ambulancias.js"></script>
 </body>
 </html>

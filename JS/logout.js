@@ -1,14 +1,9 @@
-// Cierre de sesion: borra la sesion de LocalStorage y vuelve al login.
+// Cierre de sesion: destruye la sesion en el servidor y vuelve al login.
 document.addEventListener('DOMContentLoaded', () => {
     const btnLogout = document.getElementById('btn-logout');
     if (!btnLogout) return;
-    if (localStorage.getItem('token')) {
-        btnLogout.style.display = '';
-    }
-
     btnLogout.addEventListener('click', (event) => {
         event.preventDefault();
-        localStorage.clear();
-        window.location.href = 'login.html';
+        fetch('../negocio/logout.php', { method: 'POST' })
+            .finally(() => { window.location.replace('login.html'); });
     });
-});
