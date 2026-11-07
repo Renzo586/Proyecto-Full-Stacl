@@ -7,3 +7,4 @@ document.addEventListener('DOMContentLoaded', () => {
         fetch('../negocio/logout.php', { method: 'POST' })
             .finally(() => { window.location.replace('login.html'); });
     });
+});
