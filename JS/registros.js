@@ -33,7 +33,7 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        fetch('../negocio/registro.php', { method: 'POST', body: new FormData(formulario) })
+        fetch('../negocio/Registro.php', { method: 'POST', body: new FormData(formulario) })
             .then((response) => response.json())
             .then((data) => {
                 if (data.ok) {

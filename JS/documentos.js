@@ -28,7 +28,7 @@ const eliminarDocumento = (id, usuario) => {
     if (!confirm('Seguro que queres eliminar este documento?')) return;
     const datos = new FormData();
     datos.append('id', id);
-    fetch('../negocio/eliminardocumento.php', { method: 'POST', body: datos })
+    fetch('../negocio/Eliminardocumento.php', { method: 'POST', body: datos })
         .then((response) => response.json())
         .then((data) => {
             mostrarMensaje(data.ok ? data.mensaje : 'Error: ' + data.error, !data.ok);
