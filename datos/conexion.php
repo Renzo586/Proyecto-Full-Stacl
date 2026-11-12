@@ -3,9 +3,9 @@ declare(strict_types=1);
 
 function obtenerConexion(): PDO
 {
-    $host = getenv('DB_HOST') ?: '127.0.0.1';
+    $host = getenv('DB_HOST') ?: 'mi_db';
     $port = getenv('DB_PORT') ?: '3306';
-    $database = getenv('DB_NAME') ?: 'chadtechhospital';
+    $database = getenv('DB_NAME') ?: 'hospital';
     $username = getenv('DB_USER') ?: 'root';
     $password = getenv('DB_PASSWORD') ?: '';
 
