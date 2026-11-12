@@ -5,7 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const mostrar = (texto, esError) => {
         mensaje.textContent = texto;
-        mensaje.className = esError ? 'mensaje-error' : 'mensaje-ok';
+        mensaje.className = esError ? 'mensaje-error' : 'mensaje-ok';3
     };
 
     formulario.addEventListener('submit', (event) => {

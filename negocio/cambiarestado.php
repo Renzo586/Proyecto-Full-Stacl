@@ -7,7 +7,7 @@ require_once __DIR__ . '/../datos/Trasladobd.php';
 exigirMetodo('POST');
 sesion_requerir_rol('administrador', 'operador');
 
-$id          = (int) campoPost('id');
+$id = (int) campoPost('id');
 $nuevoEstado = campoPost('estado');
 $permitidos = [
     'Pendiente'  => ['En curso', 'Cancelado'],
