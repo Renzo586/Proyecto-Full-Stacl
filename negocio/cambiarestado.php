@@ -2,7 +2,7 @@
 // Cambio de estado de un traslado, respetando el ciclo de vida permitido.
 require_once __DIR__ . '/util.php';
 require_once __DIR__ . '/sesion.php';
-require_once __DIR__ . '/../datos/Trasladobd.php';
+require_once __DIR__ . '/../datos/trasladobd.php';
 
 exigirMetodo('POST');
 sesion_requerir_rol('administrador', 'operador');

@@ -2,7 +2,7 @@
 // Alta y edicion de traslados. Si llega un id se edita; si no, se crea en estado Pendiente.
 require_once __DIR__ . '/util.php';
 require_once __DIR__ . '/sesion.php';
-require_once __DIR__ . '/../datos/Trasladobd.php';
+require_once __DIR__ . '/../datos/trasladobd.php';
 exigirMetodo('POST');
 $usuario = sesion_requerir_rol('administrador', 'operador');
 function leerFecha(string $texto): ?DateTime

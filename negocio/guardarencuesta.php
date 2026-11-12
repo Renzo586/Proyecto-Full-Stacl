@@ -1,7 +1,7 @@
 <?php
 // Guarda una respuesta de encuesta. No requiere sesion (formulario anonimo).
 require_once __DIR__ . '/util.php';
-require_once __DIR__ . '/../datos/Encuestabd.php';
+require_once __DIR__ . '/../datos/encuestabd.php';
 
 exigirMetodo('POST');
 
